@@ -83,7 +83,7 @@ class GaussSolver(data: InputData) {
         var maxResidual = 0.0
         for (i in 0 until size) {
             println("  r[${i + 1}] = ${FORMATTER.format(residual[i])}")
-            maxResidual = Math.max(maxResidual, Math.abs(residual[i]))
+            maxResidual = max(maxResidual, abs(residual[i]))
         }
         println("  Максимальная невязка: ${FORMATTER.format(maxResidual)}")
     }

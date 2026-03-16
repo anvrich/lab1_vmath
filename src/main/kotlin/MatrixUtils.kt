@@ -1,6 +1,7 @@
 package org.example
 
 import java.text.DecimalFormat
+import kotlin.math.abs
 
 object MatrixUtils {
     const val EPSILON = 1e-15
@@ -12,8 +13,8 @@ object MatrixUtils {
             var zeroRow = true
             var zeroCol = true
             for (j in 0 until size) {
-                if (Math.abs(matrix[i][j]) >= EPSILON) zeroRow = false
-                if (Math.abs(matrix[j][i]) >= EPSILON) zeroCol = false
+                if (abs(matrix[i][j]) >= EPSILON) zeroRow = false
+                if (abs(matrix[j][i]) >= EPSILON) zeroCol = false
             }
             if (zeroRow || zeroCol) return true
         }
