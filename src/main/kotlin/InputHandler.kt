@@ -18,10 +18,12 @@ class InputHandler(private val sc: Scanner) {
                     println("Завершение программы.")
                     return null
                 }
+
                 1 -> {
                     val result = readFromKeyboard()
                     if (result != null) return result
                 }
+
                 2 -> {
                     val result = readFromFile()
                     if (result != null) return result
@@ -60,6 +62,9 @@ class InputHandler(private val sc: Scanner) {
                 return InputData(size, matrix, vector)
             } catch (e: FileNotFoundException) {
                 println("Файл не найден: $path")
+                println("Попробуйте ещё раз")
+            } catch (e: NoSuchElementException) {
+                println("Файл пуст или данные в нём неполные")
                 println("Попробуйте ещё раз")
             } catch (e: InputMismatchException) {
                 println("Ошибка формата данных в файле:")
