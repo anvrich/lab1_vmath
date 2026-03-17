@@ -2,6 +2,7 @@ package org.example
 
 import java.text.DecimalFormat
 import kotlin.math.abs
+import kotlin.math.max
 
 object MatrixUtils {
     const val EPSILON = 1e-15
@@ -41,5 +42,24 @@ object MatrixUtils {
             print(String.format("%8s", format(matrix[i][size])))
             println(" |")
         }
+    }
+
+
+
+    fun printSolution(solution: DoubleArray, size: Int) {
+        println("\n РЕШЕНИЕ:")
+        for (i in 0 until size) {
+            println("  x[${i + 1}] = ${format(solution[i])}")
+        }
+    }
+
+    fun printResidual(residual: DoubleArray, size: Int) {
+        println("\n ВЕКТОР НЕВЯЗКИ (r = A·x - b):")
+        var maxResidual = 0.0
+        for (i in 0 until size) {
+            println("  r[${i + 1}] = ${format(residual[i])}")
+            maxResidual = max(maxResidual, abs(residual[i]))
+        }
+        println("  Максимальная невязка: ${format(maxResidual)}")
     }
 }

@@ -83,24 +83,6 @@ class GaussSolver(data: InputData) {
     }
 
 
-    private fun printSolution() {
-        println("\n РЕШЕНИЕ:")
-        for (i in 0 until size) {
-            println("  x[${i + 1}] = ${format(solution[i])}")
-        }
-    }
-
-    private fun printResidual() {
-        println("\n ВЕКТОР НЕВЯЗКИ (r = A·x - b):")
-        var maxResidual = 0.0
-        for (i in 0 until size) {
-            println("  r[${i + 1}] = ${format(residual[i])}")
-            maxResidual = max(maxResidual, abs(residual[i]))
-        }
-        println("  Максимальная невязка: ${format(maxResidual)}")
-    }
-
-
     fun solve() {
         createAugmentedMatrix()
         MatrixUtils.printMatrix("Расширенная матрица [A|B]:", augmentedMatrix, size)
@@ -113,13 +95,13 @@ class GaussSolver(data: InputData) {
         MatrixUtils.printMatrix("\nТреугольная матрица после прямого хода:", augmentedMatrix, size)
 
         solveBackwards()
-        printSolution()
+        MatrixUtils.printSolution(solution, size)
 
         findDet()
         println("\n Определитель матрицы A: ${format(determinant)}")
 
         findResidual()
-        printResidual()
+        MatrixUtils.printResidual(solution, size)
 
 
         compareWithLibrary()
