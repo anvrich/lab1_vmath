@@ -1,8 +1,8 @@
 package org.example
 
 import org.example.MatrixUtils.EPSILON
-import org.example.MatrixUtils.FORMATTER
 import org.apache.commons.math3.linear.*
+import org.example.MatrixUtils.format
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -35,6 +35,18 @@ class GaussSolver(data: InputData) {
 
     private fun doIt(): Boolean {
         for (i in 0 until size) {
+            var maxRow = i
+            for (row in i + 1 until size) {
+                if (abs(augmentedMatrix[row][i]) > abs(augmentedMatrix[maxRow][i])) {
+                    maxRow = row
+                }
+            }
+            if (maxRow != i) {
+                val temp = augmentedMatrix[i]
+                augmentedMatrix[i] = augmentedMatrix[maxRow]
+                augmentedMatrix[maxRow] = temp
+                determinant *= -1
+            }
             if (abs(augmentedMatrix[i][i]) < EPSILON) {
                 println("Нулевой элемент на диагонали в столбце ${i + 1}")
                 return false
@@ -74,7 +86,7 @@ class GaussSolver(data: InputData) {
     private fun printSolution() {
         println("\n РЕШЕНИЕ:")
         for (i in 0 until size) {
-            println("  x[${i + 1}] = ${FORMATTER.format(solution[i])}")
+            println("  x[${i + 1}] = ${format(solution[i])}")
         }
     }
 
@@ -82,10 +94,10 @@ class GaussSolver(data: InputData) {
         println("\n ВЕКТОР НЕВЯЗКИ (r = A·x - b):")
         var maxResidual = 0.0
         for (i in 0 until size) {
-            println("  r[${i + 1}] = ${FORMATTER.format(residual[i])}")
+            println("  r[${i + 1}] = ${format(residual[i])}")
             maxResidual = max(maxResidual, abs(residual[i]))
         }
-        println("  Максимальная невязка: ${FORMATTER.format(maxResidual)}")
+        println("  Максимальная невязка: ${format(maxResidual)}")
     }
 
 
@@ -104,7 +116,7 @@ class GaussSolver(data: InputData) {
         printSolution()
 
         findDet()
-        println("\n Определитель матрицы A: ${FORMATTER.format(determinant)}")
+        println("\n Определитель матрицы A: ${format(determinant)}")
 
         findResidual()
         printResidual()
@@ -124,9 +136,9 @@ class GaussSolver(data: InputData) {
 
             println("\n РЕШЕНИЕ БИБЛИОТЕЧНЫМ МЕТОДОМ (Apache Commons Math):")
             for (i in 0 until size) {
-                println("  x${i + 1}_lib = ${FORMATTER.format(xLib.getEntry(i))}")
+                println("  x${i + 1}_lib = ${format(xLib.getEntry(i))}")
             }
-            println("  det_lib(A) = ${FORMATTER.format(detLib)}")
+            println("  det_lib(A) = ${format(detLib)}")
 
             println("\n СРАВНЕНИЕ РЕЗУЛЬТАТОВ:")
             var maxDiff = 0.0
